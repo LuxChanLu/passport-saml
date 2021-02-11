@@ -33,6 +33,9 @@ export function signSamlPost(samlMessage: string, xpath: string, options: SAMLOp
   if (options.signatureAlgorithm) {
     sig.signatureAlgorithm = algorithms.getSigningAlgorithm(options.signatureAlgorithm);
   }
+  if (options.keyInfoProvider) {
+    sig.keyInfoProvider = options.keyInfoProvider
+  }
   sig.addReference(xpath, transforms, algorithms.getDigestAlgorithm(options.digestAlgorithm));
   sig.signingKey = options.privateKey;
   sig.computeSignature(samlMessage, {

@@ -1,5 +1,6 @@
 import type * as express from "express";
 import * as passport from "passport";
+import { FileKeyInfo } from "xml-crypto";
 import type { CacheProvider } from "./inmemory-cache-provider";
 
 export type CertCallback = (
@@ -25,6 +26,7 @@ export interface SAMLOptions {
   /** @deprecated use privateKey field instead */
   privateCert?: string;
   privateKey: string;
+  keyInfoProvider: FileKeyInfo
   cert: string | string[] | CertCallback;
   decryptionPvk: string;
   signatureAlgorithm: "sha1" | "sha256" | "sha512";
