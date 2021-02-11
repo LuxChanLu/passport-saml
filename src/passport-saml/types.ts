@@ -60,6 +60,7 @@ export interface SAMLOptions {
   xmlSignatureTransforms: string[];
   digestAlgorithm: string;
   disableRequestACSUrl: boolean;
+  hooks: SamlHooks;
 }
 
 export type SamlConfig = Partial<SAMLOptions> & StrategyOptions;
@@ -74,6 +75,11 @@ export interface SamlScopingConfig {
   idpList?: SamlIDPListConfig[];
   proxyCount?: number;
   requesterId?: string[];
+}
+
+export interface SamlHooks {
+  onAuthorizeRequest(request: AuthorizeRequestXML): any;
+  onLogoutRequest(request: LogoutRequestXML): any;
 }
 
 export type XMLValue = string | number | boolean | null | XMLObject | XMLValue[];

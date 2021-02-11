@@ -388,6 +388,10 @@ class SAML {
       request["samlp:AuthnRequest"]["samlp:Scoping"] = scoping;
     }
 
+    if (this.options.hooks && this.options.hooks.onAuthorizeRequest) {
+      await this.options.hooks.onAuthorizeRequest(request)
+    }
+
     let stringRequest = xmlbuilder.create((request as unknown) as Record<string, any>).end();
     if (isHttpPostBinding && this.options.privateKey) {
       stringRequest = signAuthnRequestPost(stringRequest, this.options);
@@ -434,6 +438,9 @@ class SAML {
     }
 
     await this.cacheProvider.saveAsync(id, instant);
+    if (this.options.hooks && this.options.hooks.onAuthorizeRequest) {
+      await this.options.hooks.onLogoutRequest(request)
+    }
     return xmlbuilder.create((request as unknown) as Record<string, any>).end();
   }
 
